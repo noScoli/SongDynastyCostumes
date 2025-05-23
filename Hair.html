@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>宋韵卿裳——发型店</title>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .loading{
+            position: fixed;
+            top: 0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 3s ease;
+        }
+
+        .loading_out {
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .bg {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .bgimg {
+            max-width: 100%;
+            max-height: 100%;
+            height: 100vh;
+		}
+
+        .back{
+            position: absolute;
+            width: 15%;
+            left:0;
+            top:3%;
+            z-index: 6;
+            cursor: pointer;
+        }
+
+        #music{
+			position: absolute;
+			width: 10%;
+			right: 1%;
+			top: 1%;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+        .title{
+            position: absolute;
+            width:100%;
+            z-index: 5;
+            top:30%;
+            animation: slideInOut 5s forwards;
+        }
+
+        @keyframes slideInOut {
+            0% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100%);
+            } 
+        }
+        
+        .person{
+            position: absolute;
+            height: 90%;
+            top:8%;
+            left:6%;
+        }
+
+        #head{
+            position: absolute;
+            height: 100%;
+            z-index: 4;
+        }
+
+        #shoulder{
+            position: absolute;
+            height: 100%;
+            left: -1%;
+            z-index: 2;
+        }
+
+        #hand{
+            position: absolute;
+            height: 100%;
+            z-index: 2;
+        }
+
+        #fazan{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #guanshi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #upper{
+            position: absolute;
+            height: 100%;
+            z-index: 3;
+        }
+
+        #moxiong{
+            position: absolute;
+            height: 100%;
+            top:1.5%;
+            z-index: 2;
+        }
+
+        #lower{
+            position: absolute;
+            height: 100%;
+            z-index: 1;
+            top:-1%;
+        }
+
+        #ershi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #pibo{
+            position:relative;
+            height: 100%;
+            left: -21.5%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        .window{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            z-index: 4;
+        }
+
+        .Frame{
+            position: absolute;
+            bottom: 2%;
+            left: 0;
+            overflow-x: hidden;
+            z-index: 4;
+        }
+
+        .frame{
+            position: relative;
+            cursor: grab;
+            overflow-x: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            z-index: 5;
+        }
+
+        .hair{
+            background-image:url('./material/basemap.png');
+            background-origin: content-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 28%;
+            margin: 10px 9px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #hint{
+            position: absolute;
+            z-index: 5;
+            bottom: -1%;
+            color: #eaf1d8;
+        }
+
+        #introduce{
+            position: absolute;
+            height: 45%;
+            top:10%;
+            right:7%;
+            transition: transform 0.5s ease;
+        }
+
+        .text{
+            position: absolute;
+            color: #91493D;
+            transition: transform 0.5s ease;
+        }
+
+        #headline{
+            top:16.5%;
+            right:25%;
+            font-weight: bold;
+        }
+
+        #text1{
+            font-size: 80%;
+            text-align: left;
+            width: 35%;
+            top:25%;
+            right:12%;
+            display: block;
+        }
+
+        @keyframes turn {
+            0%{
+                transform: rotateY(180deg);
+            }
+            100%{
+                transform:rotateY(0deg);
+            }
+        }
+
+        #oppsite{
+            position: absolute;
+            width: 30%;
+            top: 24%;
+            right: 15%;
+            text-align: center;
+            display: none;
+        }
+
+        #photo{
+            width: 100%;
+        }
+
+        #text2{
+            width: 100%;
+            margin-top: 3%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loading"></div>
+    <div class="container">
+        <div class="bg">
+            <img class="bgimg" src="./material/Hair/hair bg.jpg">
+            <img class="title" src="./material/Hair/hair title.png">
+            <img class="back" src="./material/back.png">
+            <audio id="myAudio" src="./material/music.mp3" autoplay="autoplay" loop="loop" preload="auto"></audio>
+            <img id="music" src="./material/music0.png"/>
+
+            <div class="person">
+                <img id="head" src="./material/startHair.png">
+                <img id="shoulder" src="./material/shoulder.png">
+                <img id="hand" src="./material/hand.png">
+                <img id="fazan" src="./material/cloakroom/Jewelry/Fazan/fazan0.png">
+                <img id="guanshi" src="./material/cloakroom/Guanshi/guanshi0.png">
+                <img id="upper" src="./material/suyi.png">
+                <img id="moxiong" src="./material/beixin.png">
+                <img id="lower" src="./material/suqun(shadow).png">
+                <img id="ershi" src="./material/cloakroom/Jewelry/Ershi/ershi0.png">
+                <img id="pibo" src="./material/cloakroom/Pibo/pibo0.png">
+            </div>
+
+            <img class="window" src="./material/window1.png">
+            <div class="Frame">
+                <div class="frame" id="scrollable-div" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="hair" onclick="change(this)" src="./material/cloakroom/Hairstyle/ShuangYaJi.png">
+                    <img class="hair" onclick="change(this)" src="./material/cloakroom/Hairstyle/ShuangPanJi.png">
+                    <img class="hair" onclick="change(this)" src="./material/cloakroom/Hairstyle/DuoMaJi.png">
+                    <img class="hair" onclick="change(this)" src="./material/cloakroom/Hairstyle/ChaoTianJi.png">
+                    <img class="hair" onclick="change(this)" src="./material/cloakroom/Hairstyle/PanLongJi.png">
+                </div>
+            </div>
+            <p id="hint">点击介绍页空白处翻转，左右拖动换装</p>
+
+            <img id="introduce" class="pulse" src="./material/introduce.png">
+            <div class="text" id="headline">双丫髻</div>
+            <div class="text" id="text1">&emsp;&emsp;古代少女发髯名。宋代少女一般以梳双髻为多，双丫髻是双挂式中最常见之发式，其梳编法是将发平分两侧，再梳结成髻，置于头顶两侧。前额外负担多饰有垂发，俗称刘海。即在头上或在额旁梳成两个小鬟。宋代黄庭坚有：“学绾双鬟年纪小”和“云鬟垂两耳”诗句。</div>
+            <div id="oppsite">
+                <img id="photo" src="./material/cloakroom/Hairstyle/photo0.png"></img>
+                <p class="text" id="text2">双丫髻高髻陶女俑</p>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const people = localStorage.getItem("person");
+            $(".person").html(people);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let audio = document.getElementById('myAudio');
+            let musicImg = document.getElementById('music');
+
+            function playMusic() {
+                if (audio.paused) {
+                    audio.play();
+                    musicImg.src = './material/music.png';
+                    localStorage.setItem('musicPlaying', 'true');
+                } else {
+                    audio.pause();
+                    musicImg.src = './material/music0.png';
+                    localStorage.setItem('musicPlaying', 'false');
+                }
+            }
+
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                let savedTime = localStorage.getItem('musicTime');
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
+                audio.play().catch(function(error) {
+                    console.error('自动播放被浏览器拦截:', error);
+                });
+                musicImg.src = './material/music.png';
+            } else {
+                audio.pause(); // 如果在首页面未播放，则暂停音乐
+                musicImg.src = './material/music0.png';
+            }
+
+            // 保存播放时间
+            audio.addEventListener('timeupdate', function() {
+                localStorage.setItem('musicTime', audio.currentTime.toString());
+            });
+
+            // 点击音乐图标控制音乐播放/暂停
+            musicImg.addEventListener('click', playMusic);
+        });
+
+        var isDragging = false;
+        var startX = 0;
+        var scrollLeft = 0;
+
+        function startDragging(event) {
+            isDragging = true;
+            startX = getClientX(event);
+            scrollLeft = document.getElementById('scrollable-div').scrollLeft;
+            document.getElementById('scrollable-div').style.cursor = 'grabbing';
+            event.preventDefault(); 
+        }
+
+        function stopDragging() {
+            isDragging = false;
+            document.getElementById('scrollable-div').style.cursor = 'grab';
+        }
+
+        function drag(event) {
+            if (!isDragging) return;
+            var scrollableDiv = document.getElementById('scrollable-div');
+            var scrollX = getClientX(event) - startX;
+            scrollableDiv.scrollLeft = scrollLeft - scrollX;
+        }
+
+        function getClientX(event) {
+            if (event.touches && event.touches.length > 0) {
+                return event.touches[0].clientX; 
+            }
+            return event.clientX;
+        }
+
+        // 创建一个新的 XMLHttpRequest 对象，用于进行 HTTP 请求
+        var text = new XMLHttpRequest();
+        // 初始化请求，使用 GET 方法获取名为 'textContents.txt' 的文件，第三个参数 'true' 表示请求是异步的
+        text.open('GET', './material/cloakroom/Hairstyle/textContents.txt', true);
+        var textContents;
+
+        function change(a) {
+            // 从点击的图片的 src 属性中获取文件名
+            const imageName = a.src.split('/').pop(); 
+            var hairElements = document.getElementsByClassName("hair");
+            for (var i = 0; i < hairElements.length; i++) {
+                if(a==hairElements[i]){
+                    document.getElementById("head").src = "./material/cloakroom/Hairstyle/hair" + i + ".png";
+                    document.getElementById("photo").src = "./material/cloakroom/Hairstyle/photo" + i + ".png";
+                }
+            }
+            // 遍历分割后的文本内容数组
+            for (let content of textContents) { 
+                // 将每一行内容按照 ': '割为发型名称、标题和文本
+                let [hairstyle, headline, text1,text2] = content.split(':'); 
+                if (imageName === hairstyle + '.png') { 
+                    document.getElementById("headline").innerHTML = headline; 
+                    document.getElementById("text1").innerHTML = "&emsp;&emsp;"+text1; 
+                    document.getElementById("text2").innerHTML = text2; 
+                    break; 
+                }
+            }
+        }
+
+        // 使用 touchstart 事件处理移动端点击
+        const hairImages = document.querySelectorAll('.hair');
+        hairImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                change(this);
+            });
+        });
+
+        // 为 XMLHttpRequest 对象的 readyStateChange 事件添加一个回调函数
+        text.onreadystatechange = function(){
+            // 当请求的状态为 4（表示请求已完成）且状态码为 200（表示成功）时执行以下代码
+            if(text.readyState === 4 && text.status === 200){
+                // 将获取到的文件内容按照换行符分割成一个数组
+                textContents = text.responseText.split('\n'); 
+            }
+        }
+        text.send();
+
+        const introduce = document.getElementById('introduce');
+        const text1 = document.getElementById('text1');
+        const oppsite = document.getElementById('oppsite');
+
+        introduce.addEventListener('click', () => {
+            if (introduce.style.transform === 'rotateY(180deg)') {
+                introduce.style.transform = 'rotateY(0deg)';
+                text1.style.display = 'block';
+                text1.style.animation = 'turn 0.5s forwards';
+                oppsite.style.display = 'none';
+            } else {
+                introduce.style.transform = 'rotateY(180deg)';
+                text1.style.display = 'none';
+                oppsite.style.display = 'block';
+                oppsite.style.animation = 'turn 0.5s forwards';
+            }
+        });
+
+        const loading = {
+            container: document.querySelector(".loading"),
+            in: function(target) {
+                this.container.classList.remove("loading_out");
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 1000); // 等待1秒后执行页面跳转
+            },
+            out: function() {
+                this.container.classList.add("loading_out");
+                setTimeout(() => {
+                    this.container.style.display = 'none'; // 隐藏 loading div
+                }, 1000); // 等待1秒后隐藏 loading
+            }
+        };
+
+        document.querySelector('.back').addEventListener('click', function() {
+            var divContent = document.querySelector(".person").innerHTML;
+            localStorage.setItem('person', divContent);
+            loading.out();
+            setTimeout(() => {
+                loading.in('main.html');
+            }, 1000); // 等待1秒后执行页面跳转
+        });
+
+        window.addEventListener("load", () => {
+            loading.out();
+        });
+    </script>
+</body>
+</html>

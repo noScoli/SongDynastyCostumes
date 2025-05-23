@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <title>宋韵卿裳——首饰店</title>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .loading{
+            position: fixed;
+            top: 0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 3s ease;
+        }
+
+        .loading_out {
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .bg {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .bgimg {
+            max-width: 100%;
+            max-height: 100%;
+            height: 100vh;
+		}
+
+        .back{
+            position: absolute;
+            width: 15%;
+            left:0;
+            top:3%;
+            cursor: pointer;
+        }
+
+        #music{
+			position: absolute;
+			width: 10%;
+			right: 1%;
+			top: 1%;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+        .title{
+            position: absolute;
+            width:100%;
+            z-index: 5;
+            top:30%;
+            animation: slideInOut 5s forwards;
+        }
+
+        @keyframes slideInOut {
+            0% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .person{
+            position: absolute;
+            height: 90%;
+            top:8%;
+            left:6%;
+        }
+
+        #head{
+            position: absolute;
+            height: 100%;
+            z-index: 4;
+        }
+
+        #shoulder{
+            position: absolute;
+            height: 100%;
+            left:-1%;
+            z-index: 2;
+        }
+
+        #hand{
+            position: absolute;
+            height: 100%;
+            z-index: 2;
+        }
+
+        #fazan{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #guanshi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #upper{
+            position: absolute;
+            height: 100%;
+            z-index: 3;
+        }
+
+        #moxiong{
+            position: absolute;
+            height: 100%;
+            top:1.5%;
+            z-index: 2;
+        }
+
+        #lower{
+            position: absolute;
+            height: 100%;
+            z-index: 1;
+            top:-1%;
+        }
+
+        #ershi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #pibo{
+            position:relative;
+            height: 100%;
+            left: -21.5%;
+            z-index:4;
+            visibility: hidden;
+        }
+        
+        .window1{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            z-index: 4;
+        }
+
+        .window2{
+            display: flex;
+            position: absolute;
+            justify-content: space-between;
+            flex-direction: row;
+            width: 50%;
+            bottom: 27%;
+            z-index: 4;
+        }
+
+        .button{
+            width: 30%;
+            margin: 5px;
+            cursor: pointer;
+        }
+
+        .Frame{
+            position: absolute;
+            bottom: 0.5%;
+            left:0;
+            overflow-x: hidden;
+            z-index: 4;
+        }
+
+        .frame{
+            position: relative;
+            cursor: grab;
+            overflow-x: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #frame0{
+            bottom: 2%;
+        }
+
+        .guanshi{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 27%;
+            margin: 0px 14px;
+            padding: 10px 0px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #frame1{
+            display: none;
+            bottom: 2%;
+        }
+
+        .fazan{
+            background-image:url('./material/basemap.png');
+            background-origin:  border-box;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 27%;
+            margin: 0px 14px;
+            padding: 27.5px 0px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #frame2{
+            display: none;
+            bottom: 2%;
+        }
+
+        .ershi{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 27%;
+            margin: 0px 14px;
+            padding: 27.5px 0px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #hint{
+            position: absolute;
+            z-index: 5;
+            bottom: -1%;
+            color: #eaf1d8;
+        }
+
+        #introduce{
+            position: absolute;
+            width: 45%;
+            height: 45%;
+            top:10%;
+            right: 7%;
+            text-align: center;
+        }
+
+        #background{
+            width: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .text{
+            position: absolute;
+            color: #91493D;
+            transition: transform 0.5s ease;
+        }
+
+        #headline{
+            width: 100%;
+            top:10%;
+            font-weight: bold;
+        }
+
+        #text1{
+            font-size: 80%;
+            text-align: left;
+            width: 73%;
+            top:33%;
+            right:14%;
+            display: block;
+        }
+
+        @keyframes turn {
+            0%{
+                transform: rotateY(180deg);
+            }
+            100%{
+                transform:rotateY(0deg);
+            }
+        }
+
+        #oppsite{
+            position: absolute;
+            width: 65%;
+            top: 32%;
+            right: 17%;
+            text-align: center;
+            transform: rotateY(180deg);
+            display: none;
+        }
+
+        #photo{
+            width: 100%;
+        }
+
+        #text2{ 
+            width: 100%;
+            margin-top: 3%;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading"></div>
+    <div class="container">
+        <div class="bg">
+            <img class="bgimg" src="./material/Jewelry stores/Jewelry stores bg.jpg">
+            <img class="title" src="./material/Jewelry stores/Jewelry stores title.png">
+            <img class="back" src="./material/back.png">
+            <audio id="myAudio" src="./material/music.mp3" autoplay="autoplay" loop="loop" preload="auto"></audio>
+            <img id="music" src="./material/music0.png"/>
+
+            <div class="person">
+                <img id="head" src="./material/startHair.png">
+                <img id="shoulder" src="./material/shoulder.png">
+                <img id="hand" src="./material/hand.png">
+                <img id="fazan" src="./material/cloakroom/Jewelry/Fazan/fazan0.png">
+                <img id="guanshi" src="./material/cloakroom/Guanshi/guanshi0.png">
+                <img id="upper" src="./material/suyi.png">
+                <img id="moxiong" src="./material/beixin.png">
+                <img id="lower" src="./material/suqun(shadow).png">
+                <img id="ershi" src="./material/cloakroom/Jewelry/Ershi/ershi0.png">
+                <img id="pibo" src="./material/cloakroom/Pibo/pibo0.png">
+            </div>
+
+            <img class="window1" src="./material/window2.png">
+            <div class="window2">
+                <img class="button" id="Guanshi" onclick="toggle(this)" src="./material/Jewelry stores/button bianguan.png">
+                <img class="button" id="Fazan" onclick="toggle(this)" src="./material/Jewelry stores/button fazan.png">
+                <img class="button" id="Ershi" onclick="toggle(this)" src="./material/Jewelry stores/button ershi.png">
+            </div>
+
+            <div class="Frame" id="frame0">
+                <div class="frame" id="scrollable-div0" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="guanshi" onclick="guanshi(this)" src="./material/cloakroom/Guanshi/GuoQiaoJi.png">
+                    <img class="guanshi" onclick="guanshi(this)" src="./material/cloakroom/Guanshi/NanSongYinFaGuan.png">
+                    <img class="guanshi" onclick="guanshi(this)" src="./material/cloakroom/Guanshi/ShanKouGuan.png">
+                    <img class="guanshi" onclick="guanshi(this)" src="./material/cloakroom/Guanshi/XvanHuaLiaoTuanGuan.png">
+                    <img class="guanshi" onclick="guanshi(this)" src="./material/cloakroom/Guanshi/YvLanHuaTuanGuan.png">
+                    <img class="guanshi" onclick="guanshi(this)" src="./material/cloakroom/Guanshi/ChongCouZiHuaGuan.png">
+                </div>
+            </div>
+
+            <div class="Frame" id="frame1">
+                <div class="frame" id="scrollable-div1" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="fazan" onclick="fazan(this)" src="./material/cloakroom/Jewelry/Fazan/LiuJinLongWenYinZan.png">
+                    <img class="fazan" onclick="fazan(this)" src="./material/cloakroom/Jewelry/Fazan/SongLiuJinHuaTongChai.png">
+                    <img class="fazan" onclick="fazan(this)" src="./material/cloakroom/Jewelry/Fazan/YinDanPingDingJiaoZan.png">
+                    <img class="fazan" onclick="fazan(this)" src="./material/cloakroom/Jewelry/Fazan/YinLiuJinBingTouHuaZan.png">
+                </div>
+            </div>
+
+            <div class="Frame" id="frame2">
+                <div class="frame" id="scrollable-div2" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="ershi" onclick="ershi(this)" src="./material/cloakroom/Jewelry/Ershi/ShuangBinFengNiaoLianHua.png">
+                    <img class="ershi" onclick="ershi(this)" src="./material/cloakroom/Jewelry/Ershi/SongGongDengXingJinErZhui.png">
+                    <img class="ershi" onclick="ershi(this)" src="./material/cloakroom/Jewelry/Ershi/TongXinJieGuiYouDieShengErZhui.png">
+                    <img class="ershi" onclick="ershi(this)" src="./material/cloakroom/Jewelry/Ershi/YinLiuJinJvHuaWenErHuan.png">
+                </div>
+            </div>
+            <p id="hint">点击介绍页空白处翻转，左右拖动换装</p>
+            
+            <div id="introduce">
+                <img id="background" src="./material/introduce.png">
+                <p class="text" id="headline">过桥髻</p>
+                <div class="text" id="text1">&emsp;&emsp;山西博物院收藏的清代银鎏金点翠过桥冠，古代女子结婚时佩戴的头冠，一改过去流行几百年的凤冠造型，框架普通桥梁一样，因此得名。后来的戏曲头冠的造型，也受这种过桥冠影响。</div>
+                <div id="oppsite">
+                    <img id="photo" src="./material/cloakroom/Guanshi/photo0.png"></img>
+                    <p class="text" id="text2">古画美人谱</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const people = localStorage.getItem("person");
+            $(".person").html(people);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let audio = document.getElementById('myAudio');
+            let musicImg = document.getElementById('music');
+
+            function playMusic() {
+                if (audio.paused) {
+                    audio.play();
+                    musicImg.src = './material/music.png';
+                    localStorage.setItem('musicPlaying', 'true');
+                } else {
+                    audio.pause();
+                    musicImg.src = './material/music0.png';
+                    localStorage.setItem('musicPlaying', 'false');
+                }
+            }
+
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                let savedTime = localStorage.getItem('musicTime');
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
+                audio.play().catch(function(error) {
+                    console.error('自动播放被浏览器拦截:', error);
+                });
+                musicImg.src = './material/music.png';
+            } else {
+                audio.pause(); // 如果在首页面未播放，则暂停音乐
+                musicImg.src = './material/music0.png';
+            }
+
+            // 保存播放时间
+            audio.addEventListener('timeupdate', function() {
+                localStorage.setItem('musicTime', audio.currentTime.toString());
+            });
+
+            // 点击音乐图标控制音乐播放/暂停
+            musicImg.addEventListener('click', playMusic);
+        });
+
+        var buttonElement = document.getElementsByClassName("button");
+        for(var i=0;i<buttonElement.length;i++){
+            buttonElement[i].setAttribute("data-frame", "frame"+i);
+        }
+
+        var isDragging = false;
+        var startX = 0;
+        var scrollLeft = 0;
+
+
+        // 创建一个新的 XMLHttpRequest 对象，用于进行 HTTP 请求
+        var text = new XMLHttpRequest();
+        var textContents;
+        text.open('GET', './material/cloakroom/Guanshi/textContents.txt', true);
+        // 为 XMLHttpRequest 对象的 readyStateChange 事件添加一个回调函数
+        text.onreadystatechange = function() {
+            // 当请求的状态为 4（表示请求已完成）且状态码为 200（表示成功）时执行以下代码
+            if (text.readyState === 4 && text.status === 200) {
+                textContents = text.responseText.split('\n'); 
+            }
+        }
+        text.send();
+
+        function toggle(a) {
+            var frameElements = document.getElementsByClassName("Frame");
+            var frameId = a.getAttribute("data-frame");
+            for (var i = 0; i < frameElements.length; i++) {
+                if (frameElements[i].id === frameId) {
+                    frameElements[i].style.display = "flex";
+                } else {
+                    frameElements[i].style.display = "none";
+                }
+            }
+            for (var i = 0; i < frameElements.length; i++) {
+                if (frameElements[0].id === frameId) {
+                    // 初始化请求，使用 GET 方法获取名为 'textContents.txt' 的文件，第三个参数 'true' 表示请求是异步的
+                    text.open('GET', './material/cloakroom/Guanshi/textContents.txt', true);
+                    // 为 XMLHttpRequest 对象的 readyStateChange 事件添加一个回调函数
+                    text.onreadystatechange = function() {
+                        // 当请求的状态为 4（表示请求已完成）且状态码为 200（表示成功）时执行以下代码
+                        if (text.readyState === 4 && text.status === 200) {
+                            textContents = text.responseText.split('\n'); 
+                        }
+                    }
+                    text.send();
+                } else if (frameElements[1].id === frameId) {
+                    text.open('GET', './material/cloakroom/Jewelry/Fazan/textContents.txt', true);
+                    text.onreadystatechange = function() {
+                        if (text.readyState === 4 && text.status === 200) {
+                            textContents = text.responseText.split('\n'); 
+                        }
+                    }
+                    text.send();
+                } else {
+                    text.open('GET', './material/cloakroom/Jewelry/Ershi/textContents.txt', true);
+                    text.onreadystatechange = function() {
+                        if (text.readyState === 4 && text.status === 200) {
+                            textContents = text.responseText.split('\n'); 
+                        }
+                    }
+                    text.send();
+                }
+            }
+            isDragging = false;
+            var scrollableDiv = document.getElementsByClassName('frame');
+            for (var i = 0; i < scrollableDiv.length; i++) {
+                scrollableDiv[i].scrollLeft = 0;
+            }
+        }
+
+        function startDragging(event) {
+            isDragging = true;
+            startX = getClientX(event);
+            scrollLeft = event.currentTarget.scrollLeft;
+            event.currentTarget.style.cursor = 'grabbing';
+            event.preventDefault();
+        }
+
+        function stopDragging() {
+            isDragging = false;
+            document.getElementById('scrollable-div0').style.cursor = 'grab';
+            document.getElementById('scrollable-div1').style.cursor = 'grab';
+            document.getElementById('scrollable-div2').style.cursor = 'grab';
+        }
+
+        function drag(event) {
+            if (!isDragging) return;
+            var scrollableDiv = event.currentTarget;
+            var scrollX = getClientX(event) - startX;
+            scrollableDiv.scrollLeft = scrollLeft - scrollX;
+        }
+
+        function getClientX(event) {
+            if (event.touches && event.touches.length > 0) {
+                return event.touches[0].clientX; 
+            }
+            return event.clientX;
+        }
+
+        function guanshi(a) {
+            // 从点击的图片的 src 属性中获取文件名
+            const imageName = a.src.split('/').pop(); 
+            var guanshiElements = document.getElementsByClassName("guanshi");
+            var guanshiImage = document.getElementById("guanshi");
+            if (guanshiImage.style.visibility === "visible") {
+                guanshiImage.style.visibility = "hidden";
+            }else{
+                for (var i = 0; i < guanshiElements.length; i++) {
+                    if(a==guanshiElements[i]){
+                        document.getElementById("guanshi").style.visibility = "visible";
+                        document.getElementById("guanshi").src = "./material/cloakroom/Guanshi/guanshi" + i + ".png";
+                        document.getElementById("photo").src = "./material/cloakroom/Guanshi/photo" + i + ".png";
+                        if(i==4||i==5){
+                            document.getElementById("fazan").style.visibility = "hidden";
+                        }
+                    }
+                }
+                // 遍历分割后的文本内容数组
+                for (let content of textContents) { 
+                    // 将每一行内容按照 ': '割为发型名称、标题和文本
+                    let [guanshi, headline, text1,text2] = content.split(':'); 
+                    if (imageName === guanshi + '.png') { 
+                        document.getElementById("headline").innerHTML = headline; 
+                        document.getElementById("text1").innerHTML = "&emsp;&emsp;"+text1; 
+                        document.getElementById("text2").innerHTML = text2; 
+                        break; 
+                    }
+                }
+            }
+        }
+
+        function fazan(a) {
+            const imageName = a.src.split('/').pop(); 
+            var fazanElements = document.getElementsByClassName("fazan");
+            var headImage = document.getElementById("head");
+            var src1 = "./material/cloakroom/Hairstyle/hair0.png";
+            var src2 = "./material/cloakroom/Hairstyle/hair3.png";
+            var fazanImage = document.getElementById("fazan");
+            if(headImage.getAttribute("src") === src1 || headImage.getAttribute("src")===src2){
+                fazanImage.style.visibility = "hidden";
+            }else{
+                if (fazanImage.style.visibility === "visible") {
+                    fazanImage.style.visibility = "hidden";
+                }else{
+                    for (var i = 0; i < fazanElements.length; i++) {
+                        if (a ==fazanElements[i]) {
+                            fazanImage.style.visibility = "visible";
+                            fazanImage.src = "./material/cloakroom/Jewelry/Fazan/fazan" + i + ".png";
+                            document.getElementById("photo").src = "./material/cloakroom/Jewelry/Fazan/photo" + i + ".png";
+                        }
+                    }
+                    for (let content of textContents) { 
+                        let [fazan, headline, text1,text2] = content.split(':'); 
+                        if (imageName === fazan + '.png') { 
+                            document.getElementById("headline").innerHTML = headline; 
+                            document.getElementById("text1").innerHTML = "&emsp;&emsp;"+text1; 
+                            document.getElementById("text2").innerHTML = ""; 
+                            break; 
+                        }
+                    }
+                }
+            }
+        }
+
+        function ershi(a) {
+            const imageName = a.src.split('/').pop(); 
+            var ershiImage = document.getElementById("ershi");
+            if (ershiImage.style.visibility === "visible") {
+                ershiImage.style.visibility = "hidden";
+            } else {
+                var ershiElements = document.getElementsByClassName("ershi");
+                for (var i = 0; i < ershiElements.length; i++) {
+                    if (a === ershiElements[i]) {
+                        ershiImage.style.visibility = "visible";
+                        ershiImage.src = "./material/cloakroom/Jewelry/Ershi/ershi"+i+".png";
+                        document.getElementById("photo").src = "./material/cloakroom/Jewelry/Ershi/photo" + i + ".png";
+                        break;
+                    }
+                }
+                for (let content of textContents) { 
+                    let [ershi, headline, text1,text2] = content.split(':'); 
+                    if (imageName === ershi + '.png') { 
+                        document.getElementById("headline").innerHTML = headline; 
+                        document.getElementById("text1").innerHTML = "&emsp;&emsp;"+text1; 
+                        document.getElementById("text2").innerHTML = ""; 
+                        break; 
+                    }0
+                }
+            }
+        }
+
+        // 使用 touchstart 事件处理移动端点击
+        const guanshiImages = document.querySelectorAll('.guanshi');
+        guanshiImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                guanshi(this);
+            });
+        });
+
+        // 使用 touchstart 事件处理移动端点击
+        const fazanImages = document.querySelectorAll('.fazan');
+        fazanImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                fazan(this);
+            });
+        });
+
+        // 使用 touchstart 事件处理移动端点击
+        const ershiImages = document.querySelectorAll('.ershi');
+        ershiImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                ershi(this);
+            });
+        });
+
+        const background = document.getElementById('background');
+        const headline = document.getElementById('headline');
+        const text1 = document.getElementById('text1');
+        const oppsite = document.getElementById('oppsite');
+
+        background.addEventListener('click', () => {
+            if (background.style.transform === 'rotateY(180deg)') {
+                background.style.transform = 'rotateY(0deg)';
+                text1.style.display = 'block';
+                text1.style.animation = 'turn 0.5s forwards';
+                oppsite.style.display = 'none';
+            } else {
+                background.style.transform = 'rotateY(180deg)';
+                text1.style.display = 'none';
+                oppsite.style.display = 'block';
+                oppsite.style.animation = 'turn 0.5s forwards';
+            }
+        });
+        
+        const loading = {
+            container: document.querySelector(".loading"),
+            in: function(target) {
+                this.container.classList.remove("loading_out");
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 1000); // 等待1秒后执行页面跳转
+            },
+            out: function() {
+                this.container.classList.add("loading_out");
+                setTimeout(() => {
+                    this.container.style.display = 'none'; // 隐藏 loading div
+                }, 1000); // 等待1秒后隐藏 loading
+            }
+        };
+
+        document.querySelector('.back').addEventListener('click', function() {
+            var divContent = document.querySelector(".person").innerHTML;
+            localStorage.setItem('person', divContent);
+            loading.out();
+            setTimeout(() => {
+                loading.in('main.html');
+            }, 1000); // 等待1秒后执行页面跳转
+        });
+
+        window.addEventListener("load", () => {
+            loading.out();
+        });
+    </script>
+</body>
+</html>

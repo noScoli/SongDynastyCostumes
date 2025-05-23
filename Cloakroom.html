@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <title>宋韵卿裳——衣帽间</title>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .loading{
+            position: fixed;
+            top: 0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 3s ease;
+        }
+
+        .loading_out {
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .bg {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .bgimg {
+            max-width: 100%;
+            max-height: 100%;
+            height: 100vh;
+		}
+
+        .back{
+            position: absolute;
+            width: 15%;
+            left:0;
+            top:3%;
+            cursor: pointer;
+        }
+
+        #music{
+			position: absolute;
+			width: 10%;
+            right: 30%;
+            top:1%;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+        .button{
+            position: absolute;
+            height: 10%;
+            bottom: 12%;
+            left: 30%;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        .title{
+            position: absolute;
+            width:100%;
+            z-index: 4;
+            top:30%;
+            animation: slideInOut 5s forwards;
+        }
+
+        @keyframes slideInOut {
+            0% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .person{
+            position: absolute;
+            height: 90%;
+            left: 16%;
+            bottom: 3%;
+        }
+
+        #head{
+            position: absolute;
+            height: 100%;
+            z-index: 4;
+        }
+
+        #shoulder{
+            position: absolute;
+            height: 100%;
+            left:-1%;
+            z-index: 2;
+        }
+
+        #hand{
+            position: absolute;
+            height: 100%;
+            z-index: 2;
+        }
+
+        #fazan{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #guanshi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #upper{
+            position: absolute;
+            height: 100%;
+            z-index: 3;
+        }
+
+        #moxiong{
+            position: absolute;
+            height: 100%;
+            top:1.5%;
+            z-index: 2;
+        }
+
+        #lower{
+            position: absolute;
+            height: 100%;
+            z-index: 1;
+            top:-1%;
+        }
+
+        #ershi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #pibo{
+            position:relative;
+            height: 100%;
+            left: -21.5%;
+            z-index:4;
+            visibility: hidden;
+        }
+        
+        .window{
+            position: absolute;
+            background-image: url('./material/cloakroom/right.png');
+            background-size: 100% 100%;
+            width:30%;
+            height: 100%;
+            transition: right 0.3s ease;
+        }
+
+        .category{
+            padding:20px 0px;
+            height: 10%;
+            cursor: pointer;
+        }
+
+        .category>img{
+            width: 75%;
+        }
+
+        .choice{
+            background-image: url('./material/cloakroom/photo\ bg.png');
+            background-origin: content-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            padding:20px 0px;
+            height: 14%;
+            cursor: pointer;
+        }
+
+        .choice>img{
+            height:100%;
+        }
+
+        .choice>p{
+            width:100%;
+            background-image: url('./material/cloakroom/text\ bg.png');
+            background-size:cover;
+            font-family: "方正粗黑宋字体";
+            color: #91493D;
+            margin:0;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        #window{
+            right: 0;
+        }
+
+        #window1 {
+            right: -30%;
+        }
+        
+        #window2{
+            right: -30%;
+        }
+
+        #window21{
+            right: -30%;
+        }
+
+        #window22{
+            right: -30%;
+        }
+
+        #window3{
+            right: -30%;
+            overflow-y: hidden;
+        }
+
+        .frame{
+            position: absolute;
+            width:100%;
+            height: 100%;
+            cursor: grab;
+            overflow-y: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #window4{
+            right: -30%;
+        }
+
+        #window41{
+            right: -30%;
+        }
+
+        #window42{
+            right: -30%;
+        }
+
+        #window43{
+            right: -30%;
+        }
+
+        #window5{
+            right: -30%;
+        }
+
+        #window6{
+            right: -30%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="loading"></div>
+    <div class="container">
+        <div class="bg">
+            <img class="bgimg" src="./material/cloakroom/cloakroom bg.jpg">
+            <img class="title" src="./material/cloakroom/cloakroom title.png">
+            <img class="back"  src="./material/back.png">
+            <img class="button" src="./material/cloakroom/button photo.png">
+            <audio id="myAudio" src="./material/music.mp3" autoplay="autoplay" loop="loop" preload="auto"></audio>
+            <img id="music" src="./material/music0.png"/>
+
+            <div class="person">
+                <img id="head" src="./material/startHair.png">
+                <img id="shoulder" src="./material/shoulder.png">
+                <img id="hand" src="./material/hand.png">
+                <img id="fazan" src="./material/cloakroom/Jewelry/Fazan/fazan0.png">
+                <img id="guanshi" src="./material/cloakroom/Guanshi/guanshi0.png">
+                <img id="upper" src="./material/suyi.png">
+                <img id="moxiong" src="./material/beixin.png">
+                <img id="lower" src="./material/suqun(shadow).png">
+                <img id="ershi" src="./material/cloakroom/Jewelry/Ershi/ershi0.png">
+                <img id="pibo" src="./material/cloakroom/Pibo/pibo0.png">
+            </div>
+
+            <div id="window" class="window">
+                <div id="Hair"class="category">
+                    <img src="./material/cloakroom/Hairstyle/button Hairstyle.png">
+                </div>
+                <div id="Jewelry" class="category">
+                    <img src="./material/cloakroom/Jewelry/button Jewelry.png">
+                </div>
+                <div id="Guanshi" class="category">
+                    <img src="./material/cloakroom/Guanshi/button Guanshi.png">
+                </div>
+                <div id="Outerwear" class="category">
+                    <img src="./material/cloakroom/Outerwear/button Outerwear.png">
+                </div>
+                <div id="Moxiong" class="category">
+                    <img src="./material/cloakroom/Moxiong/button Moxiong.png">
+                </div>
+                <div id="Pibo" class="category">
+                    <img src="./material/cloakroom/Pibo/button Pibo.png">
+                </div>
+            </div>
+
+            <div id="window1" class="window">
+                <div class="choice hair" onclick="hair(this)">
+                    <img src="./material/cloakroom/Hairstyle/ShuangYaJi.png">
+                    <p>双丫髻</p>
+                </div>
+                <div class="choice hair" onclick="hair(this)">
+                    <img src="./material/cloakroom/Hairstyle/ShuangPanJi.png">
+                    <p>双盘髻</p>
+                </div>
+                <div class="choice hair" onclick="hair(this)">
+                    <img src="./material/cloakroom/Hairstyle/DuoMaJi.png">
+                    <p>堕马髻</p>
+                </div>
+                <div class="choice hair" onclick="hair(this)">
+                    <img src="./material/cloakroom/Hairstyle/ChaoTianJi.png">
+                    <p>朝天髻</p>
+                </div>
+                <div class="choice hair" onclick="hair(this)">
+                    <img src="./material/cloakroom/Hairstyle/PanLongJi.png">
+                    <p>盘龙髻</p>
+                </div>
+            </div>
+
+            <div id="window2" class="window">
+                <div id="Ershi"class="category">
+                    <img src="./material/cloakroom/Jewelry/Ershi/button Ershi.png">
+                </div>
+                <div id="Fazan" class="category">
+                    <img src="./material/cloakroom/Jewelry/Fazan/button Fazan.png">
+                </div>
+            </div>
+
+            <div id="window21" class="window">
+                <div class="choice ershi" onclick="ershi(this)">
+                    <img src="./material/cloakroom/Jewelry/Ershi/ShuangBinFengNiaoLianHua.png">
+                    <p>双鬓凤嫋莲花</p>
+                </div>
+                <div class="choice ershi" onclick="ershi(this)">
+                    <img src="./material/cloakroom/Jewelry/Ershi/SongGongDengXingJinErZhui.png">
+                    <p>宋宫灯形金耳坠</p>
+                </div>
+                <div class="choice ershi" onclick="ershi(this)">
+                    <img src="./material/cloakroom/Jewelry/Ershi/TongXinJieGuiYouDieShengErZhui.png">
+                    <p>同心结龟游叠胜耳坠</p>
+                </div>
+                <div class="choice ershi" onclick="ershi(this)">
+                    <img src="./material/cloakroom/Jewelry/Ershi/YinLiuJinJvHuaWenErHuan.png">
+                    <p>银鎏金菊花纹耳环</p>
+                </div>
+            </div>
+
+            <div id="window22" class="window">
+                <div class="choice fazan" onclick="fazan(this)">
+                    <img src="./material/cloakroom//Jewelry/Fazan/LiuJinLongWenYinZan.png">
+                    <p>鎏金龙纹银簪</p>
+                </div>
+                <div class="choice fazan" onclick="fazan(this)">
+                    <img src="./material/cloakroom/Jewelry/Fazan/SongLiuJinHuaTongChai.png">
+                    <p>宋鎏金花筒钗</p>
+                </div>
+                <div class="choice fazan" onclick="fazan(this)">
+                    <img src="./material/cloakroom/Jewelry/Fazan/YinDanPingDingJiaoZan.png">
+                    <p>银胆平顶脚簪</p>
+                </div>
+                <div class="choice fazan" onclick="fazan(this)">
+                    <img src="./material/cloakroom/Jewelry/Fazan/YinLiuJinBingTouHuaZan.png">
+                    <p>银鎏金并头花簪</p>
+                </div>
+            </div>
+
+            <div id="window3" class="window">
+                <div class="frame" id="scrollable-div" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <div class="choice guanshi" onclick="guanshi(this)">
+                        <img src="./material/cloakroom/Guanshi/GuoQiaoJi.png">
+                        <p>过桥髻</p>
+                    </div>
+                    <div class="choice guanshi" onclick="guanshi(this)">
+                        <img src="./material/cloakroom/Guanshi/NanSongYinFaGuan.png">
+                        <p>南宋银发冠</p>
+                    </div>
+                    <div class="choice guanshi" onclick="guanshi(this)">
+                        <img src="./material/cloakroom/Guanshi/ShanKouGuan.png">
+                        <p>山口冠</p>
+                    </div>
+                    <div class="choice guanshi" onclick="guanshi(this)">
+                        <img src="./material/cloakroom/Guanshi/XvanHuaLiaoTuanGuan.png">
+                        <p>宣化辽团冠</p>
+                    </div>
+                    <div class="choice guanshi" onclick="guanshi(this)">
+                        <img src="./material/cloakroom/Guanshi/YvLanHuaTuanGuan.png">
+                        <p>玉兰花团冠</p>
+                    </div>
+                    <div class="choice guanshi" onclick="guanshi(this)">
+                        <img src="./material/cloakroom/Guanshi/ChongCouZiHuaGuan.png">
+                        <p>重楼子花冠</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="window4" class="window">
+                <div id="Ruyi"class="category">
+                    <img src="./material/cloakroom/Outerwear/Ruyi/button Ruyi.png">
+                </div>
+                <div id="Beizi" class="category">
+                    <img src="./material/cloakroom/Outerwear/Beizi/button Beizi.png">
+                </div>
+                <div id="Qunzi" class="category">
+                    <img src="./material/cloakroom/Outerwear/Qunzi/button Qunzi.png">
+                </div>
+            </div>
+
+            <div id="window41" class="window">
+                <div class="choice ruyi" onclick="ruyi(this)">
+                    <img src="./material/cloakroom/Outerwear/Ruyi/blue.png">
+                    <p>天水碧</p>
+                </div>
+                <div class="choice ruyi" onclick="ruyi(this)">
+                    <img src="./material/cloakroom/Outerwear/Ruyi/yellow.png">
+                    <p>芸黄</p>
+                </div>
+                <div class="choice ruyi" onclick="ruyi(this)">
+                    <img src="./material/cloakroom/Outerwear/Ruyi/red.png">
+                    <p>茜红</p>
+                </div>
+                <div class="choice ruyi" onclick="ruyi(this)">
+                    <img src="./material/cloakroom/Outerwear/Ruyi/green.png">
+                    <p>青碧</p>
+                </div>
+            </div>
+
+            <div id="window42" class="window">
+                <div class="choice beizi" onclick="beizi(this)">
+                    <img src="./material/cloakroom/Outerwear/Beizi/blue.png">
+                    <p>天水碧</p>
+                </div>
+                <div class="choice beizi" onclick="beizi(this)">
+                    <img src="./material/cloakroom/Outerwear/Beizi/yellow.png">
+                    <p>芸黄</p>
+                </div>
+                <div class="choice beizi" onclick="beizi(this)">
+                    <img src="./material/cloakroom/Outerwear/Beizi/red.png">
+                    <p>茜红</p>
+                </div>
+                <div class="choice beizi" onclick="beizi(this)">
+                    <img src="./material/cloakroom/Outerwear/Beizi/green.png">
+                    <p>青碧</p>
+                </div>
+            </div>
+
+            <div id="window43" class="window">
+                <div class="choice qunzi" onclick="qunzi(this)">
+                    <img src="./material/cloakroom/Outerwear/Qunzi/red.png">
+                    <p>赪霞</p>
+                </div>
+                <div class="choice qunzi" onclick="qunzi(this)">
+                    <img src="./material/cloakroom/Outerwear/Qunzi/green.png">
+                    <p>青碧</p>
+                </div>
+                <div class="choice qunzi" onclick="qunzi(this)">
+                    <img src="./material/cloakroom/Outerwear/Qunzi/blue.png">
+                    <p>天水碧</p>
+                </div>
+                <div class="choice qunzi" onclick="qunzi(this)">
+                    <img src="./material/cloakroom/Outerwear/Qunzi/yellow.png">
+                    <p>栀子</p>
+                </div>
+            </div>
+
+            <div id="window5" class="window">
+                <div class="choice moxiong" onclick="moxiong(this)">
+                    <img src="./material/cloakroom/Moxiong/pink.png">
+                    <p>粉米</p>
+                </div>
+                <div class="choice moxiong" onclick="moxiong(this)">
+                    <img src="./material/cloakroom/Moxiong/green.png">
+                    <p>青玉</p>
+                </div>
+                <div class="choice moxiong" onclick="moxiong(this)">
+                    <img src="./material/cloakroom/Moxiong/blue.png">
+                    <p>星郎蓝</p>
+                </div>
+            </div>
+
+            <div id="window6" class="window">
+                <div class="choice pibo" onclick="pibo(this)">
+                    <img src="./material/cloakroom/Pibo/green.png">
+                    <p>沧浪</p>
+                </div>
+                <div class="choice pibo" onclick="pibo(this)">
+                    <img src="./material/cloakroom/Pibo/pink.png">
+                    <p>粉米</p>
+                </div>
+                <div class="choice pibo" onclick="pibo(this)">
+                    <img src="./material/cloakroom/Pibo/white.png">
+                    <p>山矾</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+		$(document).ready(function() {
+		    const people = localStorage.getItem("person");
+		    $(".person").html(people);
+		});
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let audio = document.getElementById('myAudio');
+            let musicImg = document.getElementById('music');
+
+            function playMusic() {
+                if (audio.paused) {
+                    audio.play();
+                    musicImg.src = './material/music.png';
+                    localStorage.setItem('musicPlaying', 'true');
+                } else {
+                    audio.pause();
+                    musicImg.src = './material/music0.png';
+                    localStorage.setItem('musicPlaying', 'false');
+                }
+            }
+
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                let savedTime = localStorage.getItem('musicTime');
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
+                audio.play().catch(function(error) {
+                    console.error('自动播放被浏览器拦截:', error);
+                });
+                musicImg.src = './material/music.png';
+            } else {
+                audio.pause(); // 如果在首页面未播放，则暂停音乐
+                musicImg.src = './material/music0.png';
+            }
+
+            // 保存播放时间
+            audio.addEventListener('timeupdate', function() {
+                localStorage.setItem('musicTime', audio.currentTime.toString());
+            });
+
+            // 点击音乐图标控制音乐播放/暂停
+            musicImg.addEventListener('click', playMusic);
+        });
+		
+        const loading = {
+            container: document.querySelector(".loading"),
+            in: function(target) {
+                this.container.classList.remove("loading_out");
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 1000); // 等待1秒后执行页面跳转
+            },
+            out: function() {
+                this.container.classList.add("loading_out");
+                setTimeout(() => {
+                    this.container.style.display = 'none'; // 隐藏 loading div
+                }, 1000); // 等待1秒后隐藏 loading
+            }
+        };
+
+        document.querySelector('.back').addEventListener('click', function() {
+            var divContent = document.querySelector(".person").innerHTML;
+            localStorage.setItem('person', divContent);
+            loading.out();
+            setTimeout(() => {
+                loading.in('main.html');
+            }, 1000); // 等待1秒后执行页面跳转
+        });
+
+        window.addEventListener("load", () => {
+            loading.out();
+        });
+
+        document.querySelector('.button').addEventListener('click', function() {
+            var divContent = $(".person").html();
+            localStorage.setItem('person',divContent);
+            loading.in('end.html');
+        });
+
+
+        $(document).ready(function () {
+            $("#Hair").click(function () {
+                $("#window").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window1").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Jewelry").click(function () {
+                $("#window").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window2").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Ershi").click(function () {
+                $("#window2").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window21").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Fazan").click(function () {
+                $("#window2").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window22").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Guanshi").click(function () {
+                $("#window").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window3").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Outerwear").click(function () {
+                $("#window").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window4").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Ruyi").click(function () {
+                $("#window4").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window41").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Beizi").click(function () {
+                $("#window4").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window42").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Qunzi").click(function () {
+                $("#window4").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window43").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Moxiong").click(function () {
+                $("#window").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window5").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).ready(function () {
+            $("#Pibo").click(function () {
+                $("#window").css("right", "-30%"); 
+                setTimeout(function(){
+                    $("#window6").css("right", "0"); 
+                }, 500);
+            });
+        });
+
+        $(document).on('click', function(event) {
+            if (!$(event.target).closest('.window').length) {
+                var windowElements = document.getElementsByClassName("window");
+                for (var i = 0; i < windowElements.length; i++) {
+                    (function(index) {
+                        var rightValue = windowElements[index].style.right;
+                        if (rightValue === "0px"&&index!=0) {
+                            windowElements[index].style.right = "-30%";
+                            setTimeout(function() {
+                                if (index == 3 || index == 4) {
+                                    windowElements[2].style.right = "0";
+                                } else if (index == 7 || index == 8 || index == 9) {
+                                    windowElements[6].style.right = "0";
+                                } else if(index == 1 || index == 2 || index == 5||index==6|| index == 10||index==11){
+                                    windowElements[0].style.right = "0";
+                                }
+                            }, 500);
+                        }
+                    })(i);
+                }
+            }
+        });
+
+        function hair(a) {
+            var hairElements = document.getElementsByClassName("hair");
+            for (var i = 0; i < hairElements.length; i++) {
+                if(a==hairElements[i]){
+                    document.getElementById("head").src = "./material/cloakroom/Hairstyle/hair" + i + ".png";
+                }
+            }
+        }
+
+        function ershi(a) {
+            var ershiImage = document.getElementById("ershi");
+            if (ershiImage.style.visibility === "visible") {
+                ershiImage.style.visibility = "hidden";
+            } else {
+                var ershiElements = document.getElementsByClassName("ershi");
+                for (var i = 0; i < ershiElements.length; i++) {
+                    if (a === ershiElements[i]) {
+                        ershiImage.style.visibility = "visible";
+                        ershiImage.src = "./material/cloakroom/Jewelry/Ershi/ershi"+i+".png";
+                        break;
+                    }
+                }
+            }
+        }
+
+        function fazan(a) {
+            var fazanElements = document.getElementsByClassName("fazan");
+            var headImage = document.getElementById("head");
+            var src1 = "./material/cloakroom/Hairstyle/hair0.png";
+            var src2 = "./material/cloakroom/Hairstyle/hair3.png";
+            var fazanImage = document.getElementById("fazan");
+            if(headImage.getAttribute("src") === src1 || headImage.getAttribute("src")===src2){
+                fazanImage.style.visibility = "hidden";
+            }else{
+                if (fazanImage.style.visibility === "visible") {
+                    fazanImage.style.visibility = "hidden";
+                }else{
+                    for (var i = 0; i < fazanElements.length; i++) {
+                        if (a ==fazanElements[i]) {
+                            fazanImage.style.visibility = "visible";
+                            fazanImage.src = "./material/cloakroom/Jewelry/Fazan/fazan" + i + ".png";
+                        }
+                    }
+                }
+            }
+        }
+
+        var isDragging = false;
+        var startY = 0;
+        var scrollTop = 0;
+
+        function startDragging(event) {
+            isDragging = true;
+            startY = getClientY(event);
+            scrollTop = document.getElementById('scrollable-div').scrollTop;
+            document.getElementById('scrollable-div').style.cursor = 'grabbing';
+            event.preventDefault(); 
+        }
+
+        function stopDragging() {
+            isDragging = false;
+            document.getElementById('scrollable-div').style.cursor = 'grab';
+        }
+
+        function drag(event) {
+            if (!isDragging) return;
+            var scrollableDiv = document.getElementById('scrollable-div');
+            var scrollY = getClientY(event) - startY;
+            scrollableDiv.scrollTop = scrollTop - scrollY;
+        }
+
+        function getClientY(event) {
+            if (event.touches && event.touches.length > 0) {
+                return event.touches[0].clientY; 
+            }
+            return event.clientY;
+        }
+
+        function guanshi(a) {
+            var guanshiElements = document.getElementsByClassName("guanshi");
+            var guanshiImage = document.getElementById("guanshi");
+            if (guanshiImage.style.visibility === "visible") {
+                guanshiImage.style.visibility = "hidden";
+            }else{
+                for (var i = 0; i < guanshiElements.length; i++) {
+                    if(a==guanshiElements[i]){
+                        document.getElementById("guanshi").style.visibility = "visible";
+                        document.getElementById("guanshi").src = "./material/cloakroom/Guanshi/guanshi" + i + ".png";
+                        if(i==4||i==5){
+                            document.getElementById("fazan").style.visibility = "hidden";
+                        }
+                    }
+                }
+            }
+        }
+
+        function ruyi(a) {
+            var ruyiElements = document.getElementsByClassName("ruyi");
+            for (var i = 0; i < ruyiElements.length; i++) {
+                if(a==ruyiElements[i]){
+                    document.getElementById("upper").src = "./material/cloakroom/Outerwear/Ruyi/ruyi" + i + ".png";
+                }
+            }
+        }
+
+        function beizi(a) {
+            var beiziElements = document.getElementsByClassName("beizi");
+            for (var i = 0; i < beiziElements.length; i++) {
+                if(a==beiziElements[i]){
+                    document.getElementById("upper").src = "./material/cloakroom/Outerwear/Beizi/beizi" + i + ".png";
+                }
+            }
+        }
+
+        function qunzi(a) {
+            var qunziElements = document.getElementsByClassName("qunzi");
+            for (var i = 0; i < qunziElements.length; i++) {
+                if(a==qunziElements[i]){
+                    document.getElementById("lower").src = "./material/cloakroom/Outerwear/Qunzi/qunzi" + i + ".png";
+                }
+            }
+        }
+
+        function moxiong(a) {
+            var moxiongElements = document.getElementsByClassName("moxiong");
+            for (var i = 0; i < moxiongElements.length; i++) {
+                if(a==moxiongElements[i]){
+                    document.getElementById("moxiong").src = "./material/cloakroom/Moxiong/moxiong" + i + ".png";
+                }
+            }
+        }
+
+        function pibo(a) {
+            var piboImage = document.getElementById("pibo");
+            if (piboImage.style.visibility === "visible") {
+                piboImage.style.visibility = "hidden";
+            } else {
+                var piboElements = document.getElementsByClassName("pibo");
+                for (var i = 0; i < piboElements.length; i++) {
+                    if (a === piboElements[i]) {
+                        piboImage.style.visibility = "visible";
+                        piboImage.src = "./material/cloakroom/Pibo/pibo" + i + ".png";
+                        break;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

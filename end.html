@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>宋韵卿裳——留影</title>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        #bg {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .bgimg {
+            max-width: 100%;
+            max-height: 100%;
+            height: 100vh;
+		}
+
+        #music{
+			position: absolute;
+			width: 10%;
+			right: 1%;
+			top: 1%;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+        .tip{
+            position: absolute;
+            width: 40%;
+            top:22%;
+            right:6%;
+			z-index:5;
+        }
+
+        .save{
+            position: absolute;
+            width: 23%;
+            right:15%;
+			z-index:6;
+        }
+
+        .again{
+            position: absolute;
+            width: 23%;
+            top:53%;
+            right:15%;
+			z-index:6;
+        }
+        
+        #end_person{
+            position: absolute;
+            height: 90%;
+            top:8%;
+            left:9%;
+        }
+
+        #head{
+            position: absolute;
+            height: 100%;
+            z-index: 4;
+        }
+
+        #shoulder{
+            position: absolute;
+            height: 100%;
+            z-index: 2;
+        }
+
+        #hand{
+            position: absolute;
+            height: 100%;
+            z-index: 2;
+        }
+
+        #fazan{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #guanshi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #upper{
+            position: absolute;
+            height: 100%;
+            z-index: 3;
+        }
+
+        #moxiong{
+            position: absolute;
+            height: 100%;
+            top:1%;
+            z-index: 2;
+        }
+
+        #lower{
+            position: absolute;
+            height: 100%;
+            z-index: 1;
+            top:-1%;
+        }
+
+        #ershi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #pibo{
+            position:relative;
+            height: 100%;
+            left: -21.5%;
+            z-index:4;
+            visibility: hidden;
+        }
+		
+		#pibo_cover{
+		    position:relative;
+		    height: 100%;
+		    left: -30%;
+		    z-index:4;
+		    visibility: hidden;
+		}
+
+        .window{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            z-index: 4;
+        }
+
+        .Frame{
+            display: flex;
+            position: absolute;
+            justify-content: space-around;
+            flex-direction: row;
+            width: 100%;
+            z-index: 4;
+            bottom: 1.5%;
+        }
+
+        .background{
+            width: 27%;
+            margin: 10px 9px;
+            cursor: pointer;
+        }
+		
+		#cover{
+			position: absolute;
+			width:100%;
+			height:100vh;
+			z-index: -2;
+		}
+		
+		#cover_img{
+			position: absolute;
+			width:100%;
+			height:100vh;
+			top:0;
+			left:0;
+			z-index: -2;
+		}
+		#cover_people{
+			position: absolute;
+			width:50%;
+			top:0;
+			left:50%;
+			transform: translate(-50%,0);
+			height:100vh;
+		}
+		#name_text_save{
+			position: absolute;
+			font-family:"方正粗黑宋简体";
+			color:#3e0903;
+			opacity: 0.7;
+			right:10%;
+			width:30%;
+			top:27.5%;
+			font-size:2.1vh;
+			z-index: 6;
+			text-align: left;
+		}
+		#text_save{
+			position: absolute;
+			font-family:"方正粗黑宋简体";
+			color:#3e0903;
+			opacity: 0.7;
+			right:10%;
+			width:30%;
+			word-wrap:break-word;
+			top:31%;
+			font-size:1.8vh;
+			z-index: 6;
+			text-align: left;
+		}
+
+    </style>
+	
+	<script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.0/html2canvas.min.js"></script>
+	<script type="text/javascript">
+	    function change(a) {
+	        var Elements = document.getElementsByClassName("background");
+	        var bgimg = document.getElementsByClassName("bgimg")[0];
+			var cover_bgimg = document.getElementById("cover_img");
+	        if(a===Elements[0]){
+	            bgimg.src = "./material/Hair/hair bg.jpg";
+				cover_bgimg.src = "./material/Hair/hair bg.jpg";
+	        }else if(a===Elements[1]){
+	            bgimg.src = "./material/Clothing stores/Clothing stores bg.jpg";
+				cover_bgimg.src = "./material/Clothing stores/Clothing stores bg.jpg";
+	        }else if(a===Elements[2]){
+	            bgimg.src = "./material/Jewelry stores/Jewelry stores bg.jpg";
+				cover_bgimg.src = "./material/Jewelry stores/Jewelry stores bg.jpg";
+	        }
+	    }
+		
+		function again_game() {
+			var divContent = $("#end_person").html();
+			localStorage.setItem('person',divContent);
+			window.location.href="./Cloakroom.html";
+		}
+		
+		function takeScreenshot() {
+		    html2canvas(document.getElementById('cover')).then(canvas => {
+		        convertCanvasToImg(canvas);
+		    });
+		}
+
+		function convertCanvasToImg(canvas) {
+		    var myBlob = dataURLtoBlob(canvas.toDataURL('img/png', 0.92));
+		    myUrl = URL.createObjectURL(myBlob);
+		    downImg(myUrl);
+		}
+		
+		function dataURLtoBlob(dataurl) {
+		    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+		        bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+		    while (n--) {
+		        u8arr[n] = bstr.charCodeAt(n);
+		    }
+		    return new Blob([u8arr], { type: mime });
+		}
+		
+		function downImg(url) {
+		    let a = document.createElement("a")
+		    let clickEvent = document.createEvent("MouseEvents");
+		    a.setAttribute("href", url)
+		    a.setAttribute("download", "filename")
+		    a.setAttribute("target", '_blank')
+		    clickEvent.initEvent('click', true, true)
+		    a.dispatchEvent(clickEvent);
+		}
+		
+		function save(){
+			const people = localStorage.getItem('person');
+			$("#end_person").html(people);
+			$("#cover_people").html(people);
+			$("#cover_people #pibo").attr("id","pibo_cover");
+			const id = localStorage.getItem('name');
+			$("#name_text_save").html(id);
+		}
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let audio = document.getElementById('myAudio');
+            let musicImg = document.getElementById('music');
+
+            function playMusic() {
+                if (audio.paused) {
+                    audio.play();
+                    musicImg.src = './material/music.png';
+                    localStorage.setItem('musicPlaying', 'true');
+                } else {
+                    audio.pause();
+                    musicImg.src = './material/music0.png';
+                    localStorage.setItem('musicPlaying', 'false');
+                }
+            }
+
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                let savedTime = localStorage.getItem('musicTime');
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
+                audio.play().catch(function(error) {
+                    console.error('自动播放被浏览器拦截:', error);
+                });
+                musicImg.src = './material/music.png';
+            } else {
+                audio.pause(); // 如果在首页面未播放，则暂停音乐
+                musicImg.src = './material/music0.png';
+            }
+
+            // 保存播放时间
+            audio.addEventListener('timeupdate', function() {
+                localStorage.setItem('musicTime', audio.currentTime.toString());
+            });
+
+            // 点击音乐图标控制音乐播放/暂停
+            musicImg.addEventListener('click', playMusic);
+        });
+	</script>
+</head>
+<body onload="save()">
+    <div class="container">
+        <div id="bg">
+            <img class="bgimg" src="./material/End/save bg.jpg">
+            <img class="tip" src="./material/End/save text.png">
+			<div id="name_text_save"></div>
+			<div id="text_save">恭喜你，生成了你的宋韵专属人物形象</div>
+            <img class="save" onclick="takeScreenshot()" src="./material/End/button save.png">
+            <img class="again" onclick="again_game()" src="./material/End/button again.png" />
+            <audio id="myAudio" src="./material/music.mp3" autoplay="autoplay" loop="loop" preload="auto"></audio>
+            <img id="music" src="./material/music0.png"/>
+
+            <div id="end_person">
+                <img id="head" src="./material/cloakroom/hairstyle/hair0.png">
+                <img id="shoulder" src="./material/shoulder.png">
+                <img id="hand" src="./material/hand.png">
+                <img id="fazan" src="./material/cloakroom/Jewelry/Fazan/fazan0.png">
+                <img id="guanshi" src="./material/cloakroom/Guanshi/guanshi0.png">
+                <img id="upper" src="./material/cloakroom/Outerwear/Ruyi/ruyi0.png">
+                <img id="moxiong" src="./material/cloakroom/Moxiong/moxiong0.png">
+                <img id="lower" src="./material/cloakroom/Outerwear/Qunzi/qunzi0.png">
+                <img id="ershi" src="./material/cloakroom/Jewelry/Ershi/ershi0.png">
+                <img id="pibo" src="./material/cloakroom/Pibo/pibo0.png">
+            </div>
+
+            <img class="window" src="./material/window1.png">
+            <div class="Frame">
+                <img class="background" onclick="change(this)" src="./material/Hair/hair bg.jpg">
+                <img class="background" onclick="change(this)" src="./material/Clothing stores/Clothing stores bg.jpg">
+                <img class="background" onclick="change(this)" src="./material/Jewelry stores/Jewelry stores bg.jpg">
+            </div>
+			<div id="cover">
+				<img id="cover_img" src="./material/End/save bg.jpg"/>
+				<div id="cover_people">
+				</div>
+			</div>
+        </div>
+    </div>
+</body>
+</html>

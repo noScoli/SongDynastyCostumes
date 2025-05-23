@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+
+    <title>宋韵卿裳——服装店</title>
+    <style>
+        html,body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .loading{
+            position: fixed;
+            top: 0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 3s ease;
+        }
+
+        .loading_out {
+            opacity: 0;
+            transition: opacity 3s ease;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 100%;
+            position: relative;
+            margin: 0 auto;
+            text-align: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .bg {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: fit-content;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .bgimg {
+            max-width: 100%;
+            max-height: 100%;
+            height: 100vh;
+		}
+
+        .back{
+            position: absolute;
+            width: 15%;
+            left:0;
+            top:3%;
+            cursor: pointer;
+        }
+
+        #music{
+			position: absolute;
+			width: 10%;
+			right: 1%;
+			top: 1%;
+			z-index: 10;
+			cursor: pointer;
+		}
+
+        .title{
+            position: absolute;
+            width:100%;
+            z-index: 5;
+            top:30%;
+            animation: slideInOut 5s forwards;
+        }
+
+        @keyframes slideInOut {
+            0% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        .person{
+            position: absolute;
+            height: 90%;
+            top:8%;
+            left:6%;
+        }
+
+        #head{
+            position: absolute;
+            height: 100%;
+            z-index: 4;
+        }
+
+        #shoulder{
+            position: absolute;
+            height: 100%;
+            left:-1%;
+            z-index: 2;
+        }
+
+        #hand{
+            position: absolute;
+            height: 100%;
+            z-index: 2;
+        }
+
+        #fazan{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #guanshi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #upper{
+            position: absolute;
+            height: 100%;
+            z-index: 3;
+        }
+
+        #moxiong{
+            position: absolute;
+            height: 100%;
+            top:1.5%;
+            z-index: 2;
+        }
+
+        #lower{
+            position: absolute;
+            height: 100%;
+            z-index: 1;
+            top:-1%;
+        }
+
+        #ershi{
+            position: absolute;
+            height: 100%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        #pibo{
+            position:relative;
+            height: 100%;
+            left: -21.5%;
+            z-index:4;
+            visibility: hidden;
+        }
+
+        .window1{
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            z-index: 4;
+        }
+
+        .window2{
+            display: flex;
+            position: absolute;
+            justify-content:center;
+            flex-direction: row;
+            width: 100%;
+            bottom: 27%;
+            z-index: 4;
+        }
+
+        .button{
+            width: 14%;
+            margin: 5px 0px;
+            cursor: pointer;
+        }
+
+        .Frame{
+            position: absolute;
+            bottom: 0.5%;
+            left:0;
+            overflow-x:hidden;
+            z-index: 4;
+        }
+
+        .frame{
+            position: relative;
+            cursor: grab;
+            overflow-x: hidden;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #frame0{
+            bottom: 0.5%;
+        }
+
+        .ruyi{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 25%;
+            margin: 0px 10px;
+            padding: 10px 10px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #frame1{
+            display: none;
+            bottom: 0.5%;
+        }
+
+        .beizi{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 13%;
+            margin: 0px 10px;
+            padding: 14.2px 40.5px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #frame2{
+            display: none;
+            bottom: 0.5%;
+        }
+
+        .qunzi{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 12%;
+            margin: 0px 10px;
+            padding: 17.5px 43px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #frame3{
+            display: none;
+            bottom: 0.5%;
+        }
+
+        .moxiong{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 25%;
+            margin: 0px 10px;
+            padding: 41px 10px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #frame4{
+            display: none;
+            bottom: 0.5%;
+        }
+
+        .pibo{
+            background-image:url('./material/basemap.png');
+            background-origin: border-box ;
+            background-size:100% 100%;
+            background-repeat: no-repeat;
+            width: 25%;
+            margin: 0px 10px;
+            padding: 44.5px 10px;
+            cursor: pointer;
+            transition: left 0.3s ease-out;
+        }
+
+        #hint{
+            position: absolute;
+            z-index: 5;
+            bottom: -1%;
+            color: #eaf1d8;
+        }
+
+        #introduce{
+            position: absolute;
+            width: 45%;
+            height: 45%;
+            top:10%;
+            right: 7%;
+            text-align: center;
+        }
+
+        #background{
+            width: 100%;
+            transition: transform 0.5s ease;
+        }
+
+        .text{
+            position: absolute;
+            color: #91493D;
+            transition: transform 0.5s ease;
+        }
+
+        #headline{
+            width: 100%;
+            top:10%;
+            font-weight: bold;
+        }
+
+        #text1{
+            font-size: 80%;
+            text-align: left;
+            width: 73%;
+            top:33%;
+            right:14%;
+            display: block;
+        }
+
+        @keyframes turn {
+            0%{
+                transform: rotateY(180deg);
+            }
+            100%{
+                transform:rotateY(0deg);
+            }
+        }
+
+        #oppsite{
+            position: absolute;
+            width: 65%;
+            top: 32%;
+            right: 17%;
+            text-align: center;
+            transform: rotateY(180deg);
+            display: none;
+        }
+
+        #photo{
+            width: 100%;
+        }
+
+        #text2{ 
+            width: 100%;
+            margin-top: 3%;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading"></div>
+    <div class="container">
+        <div class="bg">
+            <img class="bgimg" src="./material/Clothing stores/Clothing stores bg.jpg">
+            <img class="title" src="./material/Clothing stores/Clothing stores title.png">
+            <img class="back" src="./material/back.png">
+            <audio id="myAudio" src="./material/music.mp3" autoplay="autoplay" loop="loop" preload="auto"></audio>
+            <img id="music" src="./material/music0.png"/>
+
+            <div class="person">
+                <img id="head" src="./material/startHair.png">
+                <img id="shoulder" src="./material/shoulder.png">
+                <img id="hand" src="./material/hand.png">
+                <img id="fazan" src="./material/cloakroom/Jewelry/Fazan/fazan0.png">
+                <img id="guanshi" src="./material/cloakroom/Guanshi/guanshi0.png">
+                <img id="upper" src="./material/suyi.png">
+                <img id="moxiong" src="./material/beixin.png">
+                <img id="lower" src="./material/suqun(shadow).png">
+                <img id="ershi" src="./material/cloakroom/Jewelry/Ershi/ershi0.png">
+                <img id="pibo" src="./material/cloakroom/Pibo/pibo0.png">
+            </div>
+
+            <img class="window1" src="./material/window2.png">
+            <div class="window2">
+                <img class="button" id="Ruyi"  onclick="toggle(this)" src="./material/Clothing stores/ruyi.png">
+                <img class="button" id="Beizi" onclick="toggle(this)" src="./material/Clothing stores/beizi.png">
+                <img class="button" id="Qunzi" onclick="toggle(this)" src="./material/Clothing stores/qunzi.png">
+                <img class="button" id="Moxiong" onclick="toggle(this)" src="./material/Clothing stores/moxiong.png">
+                <img class="button" id="Pibo" onclick="toggle(this)" src="./material/Clothing stores/pibo.png">
+            </div>
+
+            <div class="Frame" id="frame0">
+                <div class="frame" id="scrollable-div0" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="ruyi" onclick="ruyi(this)" src="./material/cloakroom/Outerwear/Ruyi/blue.png">
+                    <img class="ruyi" onclick="ruyi(this)" src="./material/cloakroom/Outerwear/Ruyi/yellow.png">
+                    <img class="ruyi" onclick="ruyi(this)" src="./material/cloakroom/Outerwear/Ruyi/red.png">
+                    <img class="ruyi" onclick="ruyi(this)" src="./material/cloakroom/Outerwear/Ruyi/green.png">
+                </div>
+            </div>
+
+            <div class="Frame" id="frame1">
+                <div class="frame" id="scrollable-div1" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="beizi" onclick="beizi(this)" src="./material/cloakroom/Outerwear/Beizi/blue.png">
+                    <img class="beizi" onclick="beizi(this)" src="./material/cloakroom/Outerwear/Beizi/yellow.png">
+                    <img class="beizi" onclick="beizi(this)" src="./material/cloakroom/Outerwear/Beizi/red.png">
+                    <img class="beizi" onclick="beizi(this)" src="./material/cloakroom/Outerwear/Beizi/green.png">
+                </div>
+            </div>
+
+            <div class="Frame" id="frame2">
+                <div class="frame" id="scrollable-div2" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="qunzi" onclick="qunzi(this)" src="./material/cloakroom/Outerwear/Qunzi/red.png">
+                    <img class="qunzi" onclick="qunzi(this)" src="./material/cloakroom/Outerwear/Qunzi/green.png">
+                    <img class="qunzi" onclick="qunzi(this)" src="./material/cloakroom/Outerwear/Qunzi/blue.png">
+                    <img class="qunzi" onclick="qunzi(this)" src="./material/cloakroom/Outerwear/Qunzi/yellow.png">
+                </div>
+            </div>
+
+            <div class="Frame" id="frame3">
+                <div class="frame" id="scrollable-div3" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="moxiong" onclick="moxiong(this)" src="./material/cloakroom/Moxiong/pink.png">
+                    <img class="moxiong" onclick="moxiong(this)" src="./material/cloakroom/Moxiong/green.png">
+                    <img class="moxiong" onclick="moxiong(this)" src="./material/cloakroom/Moxiong/blue.png">
+                </div>
+            </div>
+
+            <div class="Frame" id="frame4">
+                <div class="frame" id="scrollable-div4" onmousedown="startDragging(event)" onmouseup="stopDragging()" onmouseleave="stopDragging()" onmousemove="drag(event)" ontouchstart="startDragging(event)" ontouchend="stopDragging()" ontouchmove="drag(event)">
+                    <img class="pibo" onclick="pibo(this)" src="./material/cloakroom/Pibo/green.png">
+                    <img class="pibo" onclick="pibo(this)" src="./material/cloakroom/Pibo/pink.png">
+                    <img class="pibo" onclick="pibo(this)" src="./material/cloakroom/Pibo/white.png">
+                </div>
+            </div>
+
+            <p id="hint">点击介绍页空白处翻转，左右拖动换装</p>
+            <div id="introduce">
+                <img id="background" src="./material/introduce.png">
+                <p class="text" id="headline">襦衣</p>
+                <div class="text" id="text1">&emsp;&emsp;襦在宋代时期的样式：衣长到腰部，多用对襟的领口，袖口收的相对紧窄。襦的种类有多种，既有类似于衫的单襦，又有与袄样式相近的复襦。宋代女性在襦上加以刺绣，为的是使襦看起来更精致美观，更具有装饰性。不同年龄阶段和社会阶层的女性在穿着襦时会选择不同颜色来搭配自身。</div>
+                <div id="oppsite">
+                    <img id="photo" src="./material/cloakroom/photo0.png"></img>
+                    <p class="text" id="text2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const people = localStorage.getItem("person");
+            $(".person").html(people);
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let audio = document.getElementById('myAudio');
+            let musicImg = document.getElementById('music');
+
+            function playMusic() {
+                if (audio.paused) {
+                    audio.play();
+                    musicImg.src = './material/music.png';
+                    localStorage.setItem('musicPlaying', 'true');
+                } else {
+                    audio.pause();
+                    musicImg.src = './material/music0.png';
+                    localStorage.setItem('musicPlaying', 'false');
+                }
+            }
+
+            if (localStorage.getItem('musicPlaying') === 'true') {
+                let savedTime = localStorage.getItem('musicTime');
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
+                audio.play().catch(function(error) {
+                    console.error('自动播放被浏览器拦截:', error);
+                });
+                musicImg.src = './material/music.png';
+            } else {
+                audio.pause(); // 如果在首页面未播放，则暂停音乐
+                musicImg.src = './material/music0.png';
+            }
+
+            // 保存播放时间
+            audio.addEventListener('timeupdate', function() {
+                localStorage.setItem('musicTime', audio.currentTime.toString());
+            });
+
+            // 点击音乐图标控制音乐播放/暂停
+            musicImg.addEventListener('click', playMusic);
+        });
+
+        var buttonElement = document.getElementsByClassName("button");
+        for(var i=0;i<buttonElement.length;i++){
+            buttonElement[i].setAttribute("data-frame", "frame"+i);
+        }
+
+        var isDragging = false;
+        var startX = 0;
+        var scrollLeft = 0;
+
+        // 创建一个新的 XMLHttpRequest 对象，用于进行 HTTP 请求
+        var text = new XMLHttpRequest();
+        var textContents;
+        text.open('GET', './material/cloakroom/textContents.txt', true);
+        // 为 XMLHttpRequest 对象的 readyStateChange 事件添加一个回调函数
+        text.onreadystatechange = function() {
+            // 当请求的状态为 4（表示请求已完成）且状态码为 200（表示成功）时执行以下代码
+            if (text.readyState === 4 && text.status === 200) {
+                textContents = text.responseText.split('\n'); 
+            }
+        }
+        text.send();
+
+        function toggle(a){
+            // 从点击的图片的 src 属性中获取文件名
+            const imageName = a.src.split('/').pop(); 
+            var frameElements = document.getElementsByClassName("Frame");
+            var frameId = a.getAttribute("data-frame");
+            for (var i = 0; i < frameElements.length; i++) {
+                if (frameElements[i].id === frameId) {
+                    frameElements[i].style.display = "flex";
+                    document.getElementById("photo").src = "./material/cloakroom/photo" + i + ".png";
+                } else {
+                    frameElements[i].style.display = "none";
+                }
+            }
+            isDragging = false;
+            var scrollableDiv= document.getElementsByClassName('frame');
+            for(var i=0;i<scrollableDiv.length;i++){
+                scrollableDiv[i].scrollLeft=0;
+            }
+            // 遍历分割后的文本内容数组
+            for (let content of textContents) { 
+                let [name, headline, text1, text2] = content.split(':'); 
+                if (imageName === name + '.png') { 
+                    document.getElementById("headline").innerHTML = headline; 
+                    document.getElementById("text1").innerHTML = "&emsp;&emsp;"+text1; 
+                    document.getElementById("text2").innerHTML = text2; 
+                    break; 
+                }
+            }
+        }
+
+        function startDragging(event) {
+            isDragging = true;
+            startX = getClientX(event);
+            scrollLeft = event.currentTarget.scrollLeft;
+            event.currentTarget.style.cursor = 'grabbing';
+            event.preventDefault();
+        }
+
+        function stopDragging() {
+            isDragging = false;
+            document.getElementById('scrollable-div0').style.cursor = 'grab';
+            document.getElementById('scrollable-div1').style.cursor = 'grab';
+            document.getElementById('scrollable-div2').style.cursor = 'grab';
+            document.getElementById('scrollable-div3').style.cursor = 'grab';
+            document.getElementById('scrollable-div4').style.cursor = 'grab';
+        }
+
+        function drag(event) {
+            if (!isDragging) return;
+            var scrollableDiv = event.currentTarget;
+            var scrollX = getClientX(event) - startX;
+            scrollableDiv.scrollLeft = scrollLeft - scrollX;
+        }
+
+        function getClientX(event) {
+            if (event.touches && event.touches.length > 0) {
+                return event.touches[0].clientX; 
+            }
+            return event.clientX;
+        }
+
+        function ruyi(a) {
+            var ruyiElements = document.getElementsByClassName("ruyi");
+            for (var i = 0; i < ruyiElements.length; i++) {
+                if(a==ruyiElements[i]){
+                    document.getElementById("upper").src = "./material/cloakroom/Outerwear/Ruyi/ruyi" + i + ".png";
+                }
+            }
+        }
+
+        function beizi(a) {
+            var beiziElements = document.getElementsByClassName("beizi");
+            for (var i = 0; i < beiziElements.length; i++) {
+                if(a==beiziElements[i]){
+                    document.getElementById("upper").src = "./material/cloakroom/Outerwear/Beizi/beizi" + i + ".png";
+                }
+            }
+        }
+
+        function qunzi(a) {
+            var qunziElements = document.getElementsByClassName("qunzi");
+            for (var i = 0; i < qunziElements.length; i++) {
+                if(a==qunziElements[i]){
+                    document.getElementById("lower").src = "./material/cloakroom/Outerwear/Qunzi/qunzi" + i + ".png";
+                }
+            }
+        }
+
+        function moxiong(a) {
+            var moxiongElements = document.getElementsByClassName("moxiong");
+            for (var i = 0; i < moxiongElements.length; i++) {
+                if(a==moxiongElements[i]){
+                    document.getElementById("moxiong").src = "./material/cloakroom/Moxiong/moxiong" + i + ".png";
+                }
+            }
+        }
+
+        function pibo(a) {
+            var piboImage = document.getElementById("pibo");
+            if (piboImage.style.visibility === "visible") {
+                piboImage.style.visibility = "hidden";
+            } else {
+                var piboElements = document.getElementsByClassName("pibo");
+                for (var i = 0; i < piboElements.length; i++) {
+                    if (a === piboElements[i]) {
+                        piboImage.style.visibility = "visible";
+                        piboImage.src = "./material/cloakroom/Pibo/pibo" + i + ".png";
+                        break;
+                    }
+                }
+            }
+        }
+
+        // 使用 touchstart 事件处理移动端点击
+        const ruyiImages = document.querySelectorAll('.ruyi');
+        ruyiImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                ruyi(this);
+            });
+        });
+
+        const beiziImages = document.querySelectorAll('.beizi');
+        beiziImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                beizi(this);
+            });
+        });
+
+        const qunziImages = document.querySelectorAll('.qunzi');
+        qunziImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                qunzi(this);
+            });
+        });
+
+        const moxiongImages = document.querySelectorAll('.moxiong');
+        moxiongImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                moxiong(this);
+            });
+        });
+
+        const piboImages = document.querySelectorAll('.pibo');
+        piboImages.forEach(image => {
+            image.addEventListener('touchstart', function(event) {
+                event.preventDefault(); // 阻止默认事件
+                pibo(this);
+            });
+        });
+
+        const background = document.getElementById('background');
+        const headline = document.getElementById('headline');
+        const text1 = document.getElementById('text1');
+        const oppsite = document.getElementById('oppsite');
+
+        background.addEventListener('click', () => {
+            if (background.style.transform === 'rotateY(180deg)') {
+                background.style.transform = 'rotateY(0deg)';
+                text1.style.display = 'block';
+                text1.style.animation = 'turn 0.5s forwards';
+                oppsite.style.display = 'none';
+            } else {
+                background.style.transform = 'rotateY(180deg)';
+                text1.style.display = 'none';
+                oppsite.style.display = 'block';
+                oppsite.style.animation = 'turn 0.5s forwards';
+            }
+        });
+
+        const loading = {
+            container: document.querySelector(".loading"),
+            in: function(target) {
+                this.container.classList.remove("loading_out");
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 1000); // 等待1秒后执行页面跳转
+            },
+            out: function() {
+                this.container.classList.add("loading_out");
+                setTimeout(() => {
+                    this.container.style.display = 'none'; // 隐藏 loading div
+                }, 1000); // 等待1秒后隐藏 loading
+            }
+        };
+
+        document.querySelector('.back').addEventListener('click', function() {
+            var divContent = document.querySelector(".person").innerHTML;
+            localStorage.setItem('person', divContent);
+            loading.out();
+            setTimeout(() => {
+                loading.in('main.html');
+            }, 1000); // 等待1秒后执行页面跳转
+        });
+
+        window.addEventListener("load", () => {
+            loading.out();
+        });
+    </script>
+</body>
+</html>

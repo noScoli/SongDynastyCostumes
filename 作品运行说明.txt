@@ -1,0 +1,4 @@
+使用Microsoft Edge或Google Chrome浏览器
+建议屏幕分辨率为2560*1440
+打开首页index.html进行作品运行
+或直接下方链接，可直接运行
